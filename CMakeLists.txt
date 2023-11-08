@@ -1,10 +1,10 @@
 ### cmake file for building libdivsufsort Package ###
-cmake_minimum_required(VERSION 2.4.4)
+cmake_minimum_required(VERSION 3.15)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 include(AppendCompilerFlags)
 
 ## Project information ##
-project(libdivsufsort C)
+project(libdivsufsort LANGUAGES C CXX)
 set(PROJECT_VENDOR "Yuta Mori")
 set(PROJECT_CONTACT "yuta.256@gmail.com")
 set(PROJECT_URL "https://github.com/y-256/libdivsufsort")
@@ -19,9 +19,9 @@ include(ProjectCPack)
 ## Project options ##
 option(BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON)
 option(BUILD_EXAMPLES "Build examples" ON)
-option(BUILD_DIVSUFSORT64 "Build libdivsufsort64" OFF)
-option(USE_OPENMP "Use OpenMP for parallelization" OFF)
+option(BUILD_DIVSUFSORT64 "Build libdivsufsort64" ON)
 option(WITH_LFS "Enable Large File Support" ON)
+option(USE_OPENMP "Use OpenMP for parallelization" OFF)
 
 ## Installation directories ##
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32 or 64)")

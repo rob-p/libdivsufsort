@@ -9,3 +9,11 @@ foreach(src suftest mksary sasearch bwt unbwt)
   add_executable(${src} ${src}.c)
   target_link_libraries(${src} divsufsort)
 endforeach(src)
+
+
+
+add_executable(dss_build dss_build.cpp)
+target_link_libraries(dss_build divsufsort divsufsort64)
+set_property(TARGET dss_build PROPERTY CXX_STANDARD 17)
+set_property(TARGET dss_build PROPERTY CXX_STANDARD_REQUIRED On)
+

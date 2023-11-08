@@ -55,8 +55,8 @@ extern "C" {
 # include <inttypes.h>
 #else
 # if HAVE_STDINT_H
-#  include <stdint.h>
 # endif
+#  include <stdint.h>
 #endif
 #if defined(BUILD_DIVSUFSORT64)
 # include "divsufsort64.h"
