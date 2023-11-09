@@ -36,11 +36,9 @@ int main(int argc, char* argv[]) {
   CLI::App app{"Build the suffix array using the divsufsort algorithm"};
   std::string filename;
   std::string output;
-  bool is_large = false;
 
   app.add_option("-i,--input", filename, "Input file on which to build SA")->required();
   app.add_option("-o,--output", output, "Ouput file where SA should be written");
-  app.add_flag("-l", is_large, "Use 64-bit integers for suffix array construction");
 
   CLI11_PARSE(app, argc, argv);
 
@@ -55,8 +53,19 @@ int main(int argc, char* argv[]) {
                        reinterpret_cast<int32_t*>(sa.data()), (int32_t)n);
     if (r != 0) {
       std::cerr << "divsufsort failed with exit code : " << r << "\n";
+      return r;
     } else {
       std::cerr << "divsufsort succeeded\n";
+    }
+    if (!output.empty()) {
+      std::ofstream ofile(output, std::ios::binary);
+      if (!ofile.is_open()) { 
+        std::cerr << "couldn't open the output file " << output << "\n"; 
+        return 1;
+      }
+      ofile.write(reinterpret_cast<char*>(&n), sizeof(n));
+      ofile.write(reinterpret_cast<char*>(sa.data()), n * sizeof(int32_t));
+      ofile.close();
     }
   } else {
     std::cerr << "using 64-bit variant\n";
@@ -65,8 +74,19 @@ int main(int argc, char* argv[]) {
                          reinterpret_cast<int64_t*>(sa.data()), (int64_t)n);
     if (r != 0) {
       std::cerr << "divsufsort failed with exit code : " << r << "\n";
+      return r;
     } else {
       std::cerr << "divsufsort succeeded\n";
+    }
+    if (!output.empty()) {
+      std::ofstream ofile(output, std::ios::binary);
+      if (!ofile.is_open()) { 
+        std::cerr << "couldn't open the output file " << output << "\n"; 
+        return 1;
+      }
+      ofile.write(reinterpret_cast<char*>(&n), sizeof(n));
+      ofile.write(reinterpret_cast<char*>(sa.data()), n * sizeof(int64_t));
+      ofile.close();
     }
   }
 
